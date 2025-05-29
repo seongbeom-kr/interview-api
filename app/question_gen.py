@@ -1,8 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_teddynote import logging
-logging.langsmith("portfolio-interview-qa")
 
 from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
