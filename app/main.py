@@ -2,12 +2,15 @@ from fastapi import FastAPI
 from app.question_gen import generate_questions
 from app.feedback_gen import generate_feedback
 from app.score_gen import generate_score
+from app.upload import router as upload_router  # ✅ 추가
 
 app = FastAPI(
     title="Interview Assistant API",
     description="포트폴리오 기반 질문 생성, 피드백, 점수화를 수행하는 API",
     version="1.0"
 )
+
+app.include_router(upload_router)  # ✅ 라우터 등록
 
 @app.get("/")
 def read_root():

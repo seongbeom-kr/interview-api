@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
-
+import os
+print(os.environ.get("OPENAI_API_KEY"))
 from langchain_teddynote import logging
 logging.langsmith("portfolio-interview-qa")
 
