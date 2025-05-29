@@ -1,19 +1,21 @@
 from dotenv import load_dotenv
 load_dotenv()
-import os
-print(os.environ.get("OPENAI_API_KEY"))
+
 from langchain_teddynote import logging
 logging.langsmith("portfolio-interview-qa")
 
-from langchain_community.document_loaders import PyMuPDFLoader
+from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.documents import Document
 
+def load_pdf_with_pypdf2(file_path: str) -> list[Document]:
+    reader = PdfReader(file_path)
+    return [Document(page_content=page.extract_text() or "") for page in reader.pages]
 def generate_questions():
-    loader = PyMuPDFLoader("data/data.pdf")
-    docs = loader.load()
+    docs = load_pdf_with_pypdf2("data/data.pdf")
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_documents(docs)
 
