@@ -1,10 +1,9 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
 import os
 from app.question_gen import generate_questions
 from app.feedback_gen import generate_feedback
 from app.score_gen import generate_score
-from app.upload import router as upload_router  # ✅ 추가
+from app.upload import router as upload_router
 
 app = FastAPI(
     title="Interview Assistant API",
@@ -12,7 +11,7 @@ app = FastAPI(
     version="1.0"
 )
 
-app.include_router(upload_router)  # ✅ 라우터 등록
+app.include_router(upload_router)
 
 @app.get("/")
 def read_root():
@@ -20,7 +19,7 @@ def read_root():
 
 @app.post("/generate-questions")
 def run_generate_questions():
-    return generate_questions()
+    return generate_questions("data/data.pdf")
 
 @app.get("/get-questions-text")
 def get_questions_text():
@@ -38,7 +37,7 @@ def get_questions_text():
 
 @app.post("/evaluate-feedback")
 def run_generate_feedback():
-    return generate_feedback()
+    return generate_feedback("data/interview_qa.txt")
 
 @app.get("/get-feedback-text")
 def get_feedback_text():
@@ -56,8 +55,7 @@ def get_feedback_text():
 
 @app.post("/score-feedback")
 def run_generate_score():
-    return generate_score()
-
+    return generate_score("data/interview_feedback.txt")
 
 @app.get("/get-score-text")
 def get_score_text():

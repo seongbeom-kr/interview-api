@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-
 from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI
@@ -12,8 +11,9 @@ from langchain_core.documents import Document
 def load_pdf_with_pypdf2(file_path: str) -> list[Document]:
     reader = PdfReader(file_path)
     return [Document(page_content=page.extract_text() or "") for page in reader.pages]
-def generate_questions():
-    docs = load_pdf_with_pypdf2("data/data.pdf")
+
+def generate_questions(file_path: str):
+    docs = load_pdf_with_pypdf2(file_path)
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_documents(docs)
 

@@ -2,10 +2,10 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-def generate_feedback():
+def generate_feedback(file_path: str):
     llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0)
 
-    with open("data/interview_qa.txt", "r", encoding="utf-8") as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         qa_text = f.read()
 
     criteria_feedback = """
