@@ -7,6 +7,7 @@ from app.score_gen import generate_score
 
 router = APIRouter()
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "../data")
+os.makedirs(UPLOAD_DIR, exist_ok=True)  # 필수: 디렉토리가 없으면 생성
 
 @router.post("/upload/pdf")
 async def upload_pdf_and_generate(file: UploadFile = File(...)):
