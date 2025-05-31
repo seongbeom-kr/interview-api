@@ -40,6 +40,35 @@ def get_questions_text():
 def run_generate_feedback():
     return generate_feedback()
 
+@app.get("/get-feedback-text")
+def get_feedback_text():
+    file_path = "data/interview_feedback.txt"
+    if not os.path.exists(file_path):
+        return {"status": "error", "message": "피드백 파일이 아직 생성되지 않았습니다."}
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    return {
+        "status": "success",
+        "feedback": content
+    }
+
 @app.post("/score-feedback")
 def run_generate_score():
     return generate_score()
+
+
+@app.get("/get-score-text")
+def get_score_text():
+    file_path = "data/interview_scores.txt"
+    if not os.path.exists(file_path):
+        return {"status": "error", "message": "점수 파일이 아직 생성되지 않았습니다."}
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    return {
+        "status": "success",
+        "score": content
+    }
